@@ -16,14 +16,26 @@ $(document).ready(function() {
   });
   
   /* requests update of artist's stars on click */
-  $('span[stars]').click(function() {
-    $.get('/stars/' + $(this).parent().parent().attr('id') + '/' + $(this).attr('stars'), function(data) {
-      location.reload();
+  //$('span[stars]').click(function() {
+  $('#playlists div span').click(function() {
+    //alert(312);
+    //$.get('/stars/' + $(this).parent().parent().attr('id') + '/' + $(this).attr('stars'), function(data) {
+    //  location.reload();
+    //});
+    
+    var details = $(this);
+    $.get('/playlist/' + details.parent().attr('playlist'), function(data) {
+      details.html(' (' + data.tracks + ' track' + (data.tracks != 1? 's': '') + ' | ' +
+        Math.round(data.time / 60000) + ' min | <strong>$' + Math.round(data.price) + '</strong> total)');
     });
+    
+    
+    
   });
 
   /* requests and sets album's details on click */
   $('#albums div span').click(function() {
+    //alert(123);
     var details = $(this);
     $.get('/album/' + details.parent().attr('album'), function(data) {
       details.html(' (' + data.tracks + ' track' + (data.tracks != 1? 's': '') + ' | ' +
